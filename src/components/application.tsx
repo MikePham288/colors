@@ -15,7 +15,7 @@ const Application = () => {
         hexColor={hexColor}
         onChange={(e) => dispatch({type: 'update-hex-color', payload: { hexColor: e.target.value }})}
       />
-      <AdjustColors hexColor={hexColor} />
+      <AdjustColors dispatch={dispatch} hexColor={hexColor} />
       <RelatedColors hexColor={hexColor} />
       <SavedColors hexColor={hexColor} />
     </div>
