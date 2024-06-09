@@ -1,4 +1,4 @@
-import { hsl, rgb } from "color-convert";
+import { hsl, hsv, rgb } from "color-convert";
 
 type HexColor = `#${string}`;
 
@@ -31,7 +31,14 @@ type UpdateHSLColorAction = {
   }
 }
 
-export type AdjustColorActions = UpdateHexColorAction | UpdateRGBColorAction | UpdateHSLColorAction;
+type UpdateHSVColorAction = {
+  type: 'update-hsv-color';
+  payload: {
+    hsv: [number, number, number]
+  }
+}
+
+export type AdjustColorActions = UpdateHexColorAction | UpdateRGBColorAction | UpdateHSLColorAction | UpdateHSVColorAction;
 
 export const initialState: ColorState = {
   hexColor: '#BADA55'
@@ -54,6 +61,11 @@ export const colorReducer = (
   if (action.type === 'update-hsl-color') {
     const hexColor = '#' + hsl.hex(action.payload.hsl);
     return { ...state, hexColor }
+  }
+  
+  if (action.type === 'update-hsv-color') {
+    const hexColor = '#' + hsv.hex(action.payload.hsv);
+    return { ...state, hexColor };
   }
   
   return state

@@ -12,7 +12,7 @@ const HexToHSL = ({ hexColor, dispatch }: HexToHSLProps) => {
   const color = hex.hsl(hexColor);
   const [h, s, l] = color;
   
-    const updateHSL = ({ hue = h, saturation = s, lightness = l }) => {
+  const updateHSL = ({ hue = h, saturation = s, lightness = l }) => {
     dispatch({
       type: 'update-hsl-color',
       payload: {
