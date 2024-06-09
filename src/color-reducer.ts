@@ -1,10 +1,11 @@
 import { cmyk, hsl, hsv, rgb } from "color-convert";
 
-type HexColor = `#${string}`;
+export type HexColorType = `#${string}`;
 
-const isHexColor = (s: string): s is HexColor => {
+const isHexColor = (s: string): s is HexColorType => {
   return s.startsWith('#');
 }
+
 type ColorFormats = 'rgb' | 'hex' | 'hsl' | 'hsv';
 type ActionTypes = `update-${ColorFormats}-color`;
 
@@ -45,7 +46,14 @@ type UpdateCMYKColorAction = {
   }
 }
 
-export type AdjustColorActions = UpdateHexColorAction | UpdateRGBColorAction | UpdateHSLColorAction | UpdateHSVColorAction | UpdateCMYKColorAction;
+type TriadColorAction = {
+  type: 'update-hex-color-by-triad',
+  payload: {
+    triad: HexColorType;
+  }
+}
+
+export type AdjustColorActions = UpdateHexColorAction | UpdateRGBColorAction | UpdateHSLColorAction | UpdateHSVColorAction | UpdateCMYKColorAction | TriadColorAction;
 
 export const initialState: ColorState = {
   hexColor: '#BADA55'
@@ -77,6 +85,11 @@ export const colorReducer = (
   
   if (action.type === 'update-cmyk-color') {
     const hexColor = '#' + cmyk.hex(action.payload.cmyk);
+    return { ...state, hexColor}
+  }
+  
+  if (action.type === 'update-hex-color-by-triad') {
+    const hexColor = action.payload.triad
     return { ...state, hexColor}
   }
   

@@ -1,18 +1,28 @@
 import clsx from 'clsx';
-import { MouseEventHandler } from 'react';
+import { Dispatch, MouseEventHandler } from 'react';
 import Button from './button';
+import { AdjustColorActions, HexColorType } from '../../color-reducer';
 
 type ColorChangeSwatchProps = {
   hexColor: string;
   className?: string;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
+  dispatch: Dispatch<AdjustColorActions>;
 };
 
 const ColorChangeSwatch = ({
   hexColor,
   className,
-  onClick,
+  dispatch,
 }: ColorChangeSwatchProps) => {
+  
+  const updateHexByTriadColor = (color: HexColorType) =>  {
+    dispatch({
+      type: 'update-hex-color-by-triad',
+      payload: {
+        triad: color
+      }
+    })
+  }
   return (
     <Button
       className={clsx(
@@ -20,7 +30,7 @@ const ColorChangeSwatch = ({
         className,
       )}
       style={{ backgroundColor: hexColor }}
-      onClick={onClick}
+      onClick={() => updateHexByTriadColor(hexColor.includes('#') ? hexColor as HexColorType : `#${hexColor}`)}
     >
       {hexColor}
     </Button>
