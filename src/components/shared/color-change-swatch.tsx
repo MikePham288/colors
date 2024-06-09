@@ -1,19 +1,19 @@
 import clsx from 'clsx';
-import { Dispatch, MouseEventHandler } from 'react';
+import { Dispatch, useContext } from 'react';
 import Button from './button';
 import { AdjustColorActions, HexColorType } from '../../color-reducer';
+import { ColorContext } from '../../context';
 
 type ColorChangeSwatchProps = {
   hexColor: string;
   className?: string;
-  dispatch: Dispatch<AdjustColorActions>;
 };
 
 const ColorChangeSwatch = ({
   hexColor,
   className,
-  dispatch,
 }: ColorChangeSwatchProps) => {
+  const {dispatch }=useContext(ColorContext)
   
   const updateHexByTriadColor = (color: HexColorType) =>  {
     dispatch({
